@@ -1,0 +1,84 @@
+# Slack Archive Migration Configuration
+slack:
+  token: "${SLACK_BOT_TOKEN}"
+  app_token: "${SLACK_APP_TOKEN}"
+  channels_to_migrate: []  # Empty list means all channels
+  file_types:
+    - "jpg"
+    - "jpeg"
+    - "png"
+    - "gif"
+    - "mp4"
+    - "mov"
+    - "avi"
+    - "webm"
+  max_file_size_mb: 100
+
+google:
+  credentials_path: "${GOOGLE_CREDENTIALS_PATH}"
+  project_id: "${GOOGLE_PROJECT_ID}"
+  drive_folder_id: "${GOOGLE_DRIVE_FOLDER_ID}"  # Root folder for migration
+  shared_drive_id: "${GOOGLE_SHARED_DRIVE_ID}"  # Optional: for shared drives
+  
+  # Vision API settings
+  vision:
+    max_results: 10
+    features:
+      - "LABEL_DETECTION"
+      - "TEXT_DETECTION"
+      - "FACE_DETECTION"
+      - "OBJECT_LOCALIZATION"
+      - "LANDMARK_DETECTION"
+      - "LOGO_DETECTION"
+      - "SAFE_SEARCH_DETECTION"
+      - "IMAGE_PROPERTIES"
+      - "CROP_HINTS"
+      - "WEB_DETECTION"
+  
+  # Video Intelligence settings
+  video_intelligence:
+    features:
+      - "LABEL_DETECTION"
+      - "SHOT_CHANGE_DETECTION"
+      - "EXPLICIT_CONTENT_DETECTION"
+      - "SPEECH_TRANSCRIPTION"
+      - "TEXT_DETECTION"
+      - "OBJECT_TRACKING"
+      - "LOGO_RECOGNITION"
+      - "PERSON_DETECTION"
+
+migration:
+  batch_size: 10
+  max_concurrent_downloads: 5
+  retry_attempts: 3
+  retry_delay_seconds: 5
+  preserve_original_names: true
+  create_channel_folders: true
+  create_user_folders: true
+  
+  # Metadata preservation
+  preserve_metadata:
+    - "uploader"
+    - "timestamp"
+    - "channel"
+    - "file_type"
+    - "file_size"
+    - "original_name"
+
+webhook:
+  enabled: true
+  port: 8080
+  host: "0.0.0.0"
+  endpoint: "/slack/webhook"
+  secret: "${WEBHOOK_SECRET}"
+
+logging:
+  level: "INFO"
+  format: "json"
+  file: "logs/migration.log"
+  max_size_mb: 100
+  backup_count: 5
+
+database:
+  path: "data/migration.db"
+  backup_interval_hours: 24

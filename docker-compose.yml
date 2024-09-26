@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  slack-migration:
+    build: .
+    container_name: slack-archive-migration
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_APP_TOKEN=${SLACK_APP_TOKEN}
+      - GOOGLE_CREDENTIALS_PATH=/app/credentials/google-service-account.json
+      - GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
+      - GOOGLE_DRIVE_FOLDER_ID=${GOOGLE_DRIVE_FOLDER_ID}
+      - GOOGLE_SHARED_DRIVE_ID=${GOOGLE_SHARED_DRIVE_ID}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+    volumes:
+      - ./credentials:/app/credentials:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./downloads:/app/downloads
+    networks:
+      - migration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a reverse proxy for production
+  nginx:
+    image: nginx:alpine
+    container_name: slack-migration-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - slack-migration
+    networks:
+      - migration-network
+
+networks:
+  migration-network:
+    driver: bridge
+
+volumes:
+  data:
+  logs:
+  downloads:
