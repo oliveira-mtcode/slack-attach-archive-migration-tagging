@@ -44,3 +44,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 
 # Default command
 CMD ["python", "main.py", "--mode", "both"]
+
+# tweak 4 at 2025-09-26 19:30:03
