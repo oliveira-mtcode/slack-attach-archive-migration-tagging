@@ -59,3 +59,5 @@ echo 4. Run: python main.py --mode migrate
 echo.
 echo For Docker setup, run: docker-compose up -d
 pause
+
+# tweak 14 at 2025-09-26 19:30:06
