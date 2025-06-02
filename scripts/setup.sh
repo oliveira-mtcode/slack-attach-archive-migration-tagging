@@ -65,3 +65,5 @@ echo "3. Update config.yaml with your preferences"
 echo "4. Run: python main.py --mode migrate"
 echo ""
 echo "For Docker setup, run: docker-compose up -d"
+
+# tweak 15 at 2025-09-26 19:30:07
