@@ -227,3 +227,5 @@ class AIAnalyzer:
             description_parts.append(f"Features: {', '.join(special_features)}")
         
         return " | ".join(description_parts) if description_parts else f"Uploaded {file_type} file"
+
+# tweak 16 at 2025-09-26 19:30:07
