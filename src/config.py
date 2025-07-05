@@ -173,3 +173,5 @@ class Config:
     def log_file(self) -> str:
         """Get log file path."""
         return self.get('logging.file', 'logs/migration.log')
+
+# tweak 17 at 2025-09-26 19:30:07
