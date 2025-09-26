@@ -334,5 +334,3 @@ For support and questions:
 ---
 
 **Note**: This tool is designed for enterprise use and requires proper Slack and Google Cloud setup. Always test with a small subset of files before running a full migration.
-
-# tweak 9 at 2025-09-26 19:30:05
